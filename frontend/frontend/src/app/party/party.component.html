@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Party Component</title>
+    <link rel="stylesheet" href="./party.component.css" />
+  </head>
+  <body>
+    <div class="party-container">
+      <h1>Party Planner</h1>
+
+      <div class="party-section">
+        <h2>Parties</h2>
+        <form (ngSubmit)="addParty()">
+          <input
+            [(ngModel)]="newParty.name"
+            name="name"
+            placeholder="Party name"
+          />
+          <input
+            [(ngModel)]="newParty.date"
+            name="date"
+            type="date"
+            placeholder="Party date"
+          />
+          <input
+            [(ngModel)]="newParty.location"
+            name="location"
+            placeholder="Party location"
+          />
+          <textarea
+            [(ngModel)]="newParty.description"
+            name="description"
+            placeholder="Party description"
+          ></textarea>
+          <button type="submit">Add Party</button>
+        </form>
+        <div *ngFor="let party of parties">
+          <h3>{{ party.name }}</h3>
+          <p>{{ party.date }} at {{ party.location }}</p>
+          <p>{{ party.description }}</p>
+          <button (click)="editParty(party.id)">Edit</button>
+          <button (click)="deleteParty(party.id)">Delete</button>
+
+          <div class="guest-section">
+            <h4>Guests</h4>
+            <form (ngSubmit)="addGuestToParty(party.id)" *ngIf="party.id">
+              <input
+                [(ngModel)]="newGuest[party.id].name"
+                name="name"
+                placeholder="Guest name"
+              />
+              <input
+                [(ngModel)]="newGuest[party.id].email"
+                name="email"
+                type="email"
+                placeholder="Guest email"
+              />
+              <button type="submit">Add Guest</button>
+            </form>
+            <div *ngIf="party.id">
+              <div *ngFor="let guest of guests[party.id]">
+                <p>{{ guest.name }} - {{ guest.email }}</p>
+                <button (click)="editGuest(guest.id)">Edit</button>
+                <button (click)="deleteGuestFromParty(party.id, guest.id)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<h2>Guest List</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="guests.length === 0">
+      <td colspan="4">No guests available</td>
+    </tr>
+    <tr *ngFor="let guest of guests">
+      <td>{{ guest.id }}</td>
+      <td>{{ guest.name }}</td>
+      <td>{{ guest.email }}</td>
+      <td>
+        <button (click)="editGuest(guest.id)">Edit</button>
+        <button (click)="deleteGuest(guest.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Add Guest</h2>
+
+<form (submit)="addGuest()">
+  <label for="guestName">Guest Name:</label>
+  <input type="text" id="guestName" name="guestName" [(ngModel)]="newGuest.name" required>
+
+  <label for="guestEmail">Guest Email:</label>
+  <input type="email" id="guestEmail" name="guestEmail" [(ngModel)]="newGuest.email" required>
+
+  <button type="submit">Add Guest</button>
+</form>
